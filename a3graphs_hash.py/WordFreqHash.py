@@ -282,6 +282,40 @@ class OpenHashtable:
                 x = "notinlist"
                 list.append(x)
             print(list)
+            for i in list:
+                self.searchhelper2(i)
+
+    def searchhelper2(self, word):
+        steps = 0
+        found = False
+        for j in range(self.p2_hashsize):
+            steps += 1
+            # print("index", i)
+            # set current to the first node in the slot
+            curr = self.p2_hashtable[j][0]
+            if found == True:
+                break
+            else:
+                while curr != None:
+                    steps += 1
+                    if curr.data == word:
+                        print("found", word, "in", steps, "steps")
+                        found = True
+                        break
+                    else:
+                        curr = curr.next
+
+            # traverse
+
+    def hashfunc2(self, word):
+        total = 0
+
+        for i in range(len(word)):
+            total = total + (i+1) * ord(word[i])
+
+        total = total % self.p2_hashsize
+
+        return total
 
     def print2(self):
         for i in range(self.p2_hashsize):
@@ -297,16 +331,6 @@ class OpenHashtable:
                 curr = curr.next
             print(list)
 
-    def hashfunc2(self, word):
-        total = 0
-
-        for i in range(len(word)):
-            total = total + (i+1) * ord(word[i])
-
-        total = total % self.p2_hashsize
-        print(total)
-        return total
-
     def main(self):
         obj.fileloader('D:/A3test.txt')
         obj.construct()
@@ -317,7 +341,7 @@ class OpenHashtable:
         obj2.fileloader('D:/A3test.txt')
         obj2.construct2()
         obj2.add2()
-        # obj2.print2()
+        obj2.print2()
         obj2.search2()
 
 
