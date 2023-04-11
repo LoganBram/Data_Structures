@@ -2,17 +2,22 @@ import re
 import string
 from nltk.corpus import stopwords
 import random
+import unittest
+import os
+
+"""Test cases for my code, use: python -m unittest test_file_name.py in terminal"""
 
 
 class ClosedHashtable:
 
     def __init__(self):
-        self.hashsize = 51
+        self.hashsize = 100
         self.table = [None]*self.hashsize
         self.stop_words = set(stopwords.words('english'))
         self.words = []
 
-        # max of 50 words in the part 2 section, hence size of 51
+        # max of 50 words being searched for in the part 2 section due to k <= 50, hence hashtablesize of 50
+
         self.p2_hashsize = 50
         self.p2_table = [None]*self.p2_hashsize
 
@@ -74,7 +79,10 @@ class ClosedHashtable:
                 if slot == start:
                     insert = True
                     break
-
+        print("OPEN HASH TABLE p1 of size: ", self.hashsize)
+        print("")
+        print(self.table)
+        print("")
         "---part2------------------------------------------------------"
 
     def p2_hashfunc(self, word):
@@ -104,25 +112,28 @@ class ClosedHashtable:
                 if slot == start:
                     insert = True
                     break
+        print("---------------OPEN HASH TABLE p2 of size: ", self.p2_hashsize)
+        print("")
 
     def p2_search(self):
         print(self.p2_table)
         for k in range(5, 25, 5):
+            print("")
             print("k =", k*2)
             print("")
             list = []
             for i in range(k):
                 x = random.randint(0, len(self.p2_table)-1)
                 list.append(self.p2_table[x][0])
-                x = "notinlist"
+                x = "notinlist"+str(i)
                 list.append(x)
             for i in list:
                 steps = 0
                 for j in range(len(self.p2_table)):
                     steps += 1
                     try:
-                        if steps == len(self.p2_table)+1:
-                            print(i, "is not in the table")
+                        if steps == len(self.p2_table):
+                            print(i, "is not in the table -1")
                             break
                         if i == self.p2_table[j][0]:
                             print(i, "is in the table, steps= ", steps)
@@ -135,9 +146,13 @@ obje = ClosedHashtable()
 
 
 obje.fileloader('D:/A3test.txt')
-# obje.add(obje.words)
-# obje.p2_add(obje.words)
-# obje.p2_search()
+obje.add(obje.words)
+
+obje.p2_add(obje.words)
+obje.p2_search()
+
+
+"-----OPEN HASH TABLE----------------"
 
 
 class Node:
@@ -196,19 +211,19 @@ class OpenHashtable:
             total = total + (i+1) * ord(word[i])
 
         total = total % self.hashsize
-        print(total)
+
         return total
 
     def construct(self):
         for i in range(self.hashsize):
-            add = Node('Head')
+            add = Node('Head', 0)
             self.hashtable.append([add])
             # print(self.hashtable[i][0].data)
 
     # adds to hash table
     def add(self):
         for word in self.words:
-            new_node = Node(word)
+            new_node = Node(word, 1)
             # get correct slot
             slot = self.hashfunc(word)
             # set current to the first node in the slot
@@ -229,6 +244,7 @@ class OpenHashtable:
     # prints the hashtable
 
     def print(self):
+        print("--------------OPEN HASHTABLE Using LinkedList Part 1-------")
         for i in range(self.hashsize):
             print("index", i)
             # set current to the first node in the slot
@@ -270,8 +286,9 @@ class OpenHashtable:
                 # traverse
                 curr = curr.next
 
+    # conducts search for pt 2 w/ helper function
     def search2(self):
-        """"""
+
         for k in range(5, 25, 5):
             print("k =", k*2)
             print("")
@@ -285,6 +302,7 @@ class OpenHashtable:
             for i in list:
                 self.searchhelper2(i)
 
+    # takes word from search list as input and searches for it in the hashtable
     def searchhelper2(self, word):
         steps = 0
         found = False
@@ -317,9 +335,12 @@ class OpenHashtable:
 
         return total
 
+    # prints out the hashtable
     def print2(self):
         for i in range(self.p2_hashsize):
+            print("")
             print("index", i)
+            print("")
             # set current to the first node in the slot
             curr = self.p2_hashtable[i][0]
             # traverse
@@ -329,6 +350,7 @@ class OpenHashtable:
                 list.append(x)
                 # print(curr.data, curr.freq)
                 curr = curr.next
+
             print(list)
 
     def main(self):
@@ -346,7 +368,9 @@ class OpenHashtable:
 
 
 obj = OpenHashtable()
-# obj.main()
+obj.main()
+
+
 obj2 = OpenHashtable()
 obj2.main2()
 
