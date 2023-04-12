@@ -6,7 +6,7 @@ import queue
 Correction: it is sparse graph, continuing with matrix even though it is inefficient"""
 
 """ part 1 is making randomized graph"""
-""" part 2 is using BFS and Prim's algorithm to calculate which one ends with a lower weight"""
+""" part 2 is using BFS and Prim's algorithm to calculate which one ends with a lower weight & the % difference between the two"""
 
 
 class Vertex:
@@ -90,9 +90,7 @@ class Graph:
         D = dict(sorted(D.items(), key=lambda item: item[1]))
 
         # implement prim's algorithm
-        """recall when we made the graph it was generated from 2 -> n, therefore our count of vertices in the graph
-        will be n-1 since it start at 2. In my case n= 10, so 9 vertices therefore total amount of edges must be 8
-        hence the len(S) < self.n-2, not len(S) < self.n"""
+
         while len(S) < self.n-1:  # !!!!!!!!!
             for e in D:
                 if e[0] in T and e[1] in Q and D[e] != 0:  # check if the edge weight is non-zero
@@ -101,7 +99,7 @@ class Graph:
                     Q.remove(e[1])
                     break
         # print("Final edge values are: ", S)
-        print("Primsum", sum(S))
+        print("Primsum on this matrix", sum(S))
         return (sum(S))
 
     def BFS(self):
@@ -110,7 +108,6 @@ class Graph:
         # starting at vertex object 2
         q.put(self.vertices[1])
         self.vertices[1].added_queue = True
-        print("BFS starting at vertice", self.vertices[1].vertexval)
         finalweight = []
         while q.empty() == False:
             neighbours = []
@@ -129,7 +126,7 @@ class Graph:
                     finalweight.append(
                         self.edges[x.vertexval-1][neighbour.vertexval - 1])
         # print("Final edge values are", finalweight)
-        print("BFSSUM", sum(finalweight))
+        print("BFSSUM on this matrix", sum(finalweight))
         return (sum(finalweight))
 
     def print_graph(self):
@@ -137,13 +134,8 @@ class Graph:
         for row in self.edges:
             print(row)
 
-
-#        print("\nVertices:")
- #       for vertex, index in self.edge_indices.items():
-  #          print(vertex)
-
     def average(self):
-        k = input("input k paramter: ")
+        k = input("input k paramter to begin comparison: ")
         k = int(k)
         self.n = 0
         for i in range(3):
@@ -159,11 +151,13 @@ class Graph:
 
                 B += self.BFS()
                 P += self.Prims()
-                print(B)
-                print(P)
+                print("new BFS weight total", B)
+                print("new BFS weight total", P)
+                print("")
             avg = (B - P)/10
             print('avergae for n = ', self.n, 'is',
-                  avg, "after ", k, "iterations")
+                  avg, "% after", k, " iterations(k)")
+            print("")
 
 
 g = Graph()
