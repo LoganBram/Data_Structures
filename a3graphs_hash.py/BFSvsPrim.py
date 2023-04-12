@@ -20,7 +20,7 @@ class Graph:
     vertices = {}
     edges = []
     edge_indices = {}
-    n = 4
+    n = 20
 
     """ chose to use matrix because after I read the instructions I thought it was going to be a dense graph, but it is sparse"""
 
@@ -55,7 +55,7 @@ class Graph:
             return False
 
     def randomgeneration(self):
-        for i in range(2, self.n):
+        for i in range(2, self.n+1):
             self.add_vertex(Vertex(i))
             x = random.randint(1, i - 1)
             S = random.sample(range(1, i), x)
@@ -74,9 +74,9 @@ class Graph:
         # add each vertex to Q
         for vertex, index in self.edge_indices.items():
             Q.append(vertex)
-        # getting all edges paired with vertex coordinates & getting rid of repetitions ex) 0,2 and 2,0
-        for i in range(self.n-1):
-            for j in range(self.n-1):
+
+        for i in range(self.n):  # !!!!!
+            for j in range(self.n):  # !!!!!!!
                 weight = self.edges[i][j]
                 # +1 because it should represent the vertice value not the index of the vertice
                 if weight != 0:  # check if the weight is non-zero
@@ -93,34 +93,41 @@ class Graph:
         """recall when we made the graph it was generated from 2 -> n, therefore our count of vertices in the graph
         will be n-1 since it start at 2. In my case n= 10, so 9 vertices therefore total amount of edges must be 8
         hence the len(S) < self.n-2, not len(S) < self.n"""
-        while len(S) < self.n-2:
+        while len(S) < self.n-1:  # !!!!!!!!!
             for e in D:
                 if e[0] in T and e[1] in Q and D[e] != 0:  # check if the edge weight is non-zero
                     S.append(D[e])
                     T.append(e[1])
                     Q.remove(e[1])
                     break
-        print("Final edge values are", S)
+        print("Final edge values are: ", S)
+        print(sum(S))
 
     def BFS(self):
         q = queue.Queue()
-        q.put(self.vertices[2])
-        self.vertices[2].added_queue = True
+        # vertices is dictionary with vertex value as key and vertex object as value
+        # starting at vertex object 2
+        q.put(self.vertices[1])
+        self.vertices[1].added_queue = True
         finalweight = []
         while q.empty() == False:
             neighbours = []
             x = q.get()
-            for i in range(self.n - 1):
+            for i in range(self.n):
+                # iterate through matrix column of current x vertice
                 if self.edges[i][x.vertexval - 1] != 0:
+                    # if connection in matrix found at designated cross cordiante, add the vertex object to neighbours list
+                    # where i is the index, therefore vertice name is i+1
                     neighbours.append(self.vertices[i+1])
-                for neighbour in neighbours:
-                    if neighbour.added_queue == False:
-                        q.put(neighbour)
-                        neighbour.added_queue = True
-                        print(type(neighbour.vertexval))
-                        finalweight.append(
-                            self.edges[x.vertexval-1][neighbour.vertexval - 1])
+            # iterate through neighbours of our current x vertice
+            for neighbour in neighbours:
+                if neighbour.added_queue == False:
+                    q.put(neighbour)
+                    neighbour.added_queue = True
+                    finalweight.append(
+                        self.edges[x.vertexval-1][neighbour.vertexval - 1])
         print("Final edge values are", finalweight)
+        print(sum(finalweight))
 
     def print_graph(self):
         print("Adjacency Matrix:")
@@ -131,13 +138,12 @@ class Graph:
 #        print("\nVertices:")
  #       for vertex, index in self.edge_indices.items():
   #          print(vertex)
-
-# Create a new graph
 g = Graph()
 g.randomgeneration()
 g.print_graph()
-# g.Prims()
+g.Prims()
 g.BFS()
+"""--------part 2-------------------"""
 
 
 """
