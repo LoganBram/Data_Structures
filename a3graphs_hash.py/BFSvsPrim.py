@@ -11,6 +11,7 @@ Correction: it is sparse graph, continuing with matrix even though it is ineffic
 class Vertex:
     def __init__(self, n):
         self.vertexval = n
+        self.added_queue = False
 
 
 class Graph:
@@ -54,13 +55,11 @@ class Graph:
 
     def randomgeneration(self):
         for i in range(2, self.n):
-            S = []
-            x = random.randint(1, i-1)
-            for j in range(x):
-                S.append(random.randint(1, i-1))
+            self.add_vertex(Vertex(i))
+            x = random.randint(1, i - 1)
+            S = random.sample(range(1, i), x)
             for num in S:
                 self.add_vertex(Vertex(num))
-                self.add_vertex(Vertex(i))
                 self.add_edge(num, i, random.randint(10, 100))
 
     "-----part2--------------------------------"
@@ -78,31 +77,31 @@ class Graph:
         for i in range(self.n-1):
             for j in range(self.n-1):
                 weight = self.edges[i][j]
-                if (j, i) not in D:
-                    D[(i, j)] = weight
-                else:
-                    pass
+                # +1 because it should represent the vertice value not the index of the vertice
+                D[(i+1, j+1)] = weight
+
         # pick random first vertice from Q for T
         x = random.randint(0, len(Q)-1)
         T.append(Q[x])
         Q.remove(Q[x])
         # sort D by value lowet to highest
         D = dict(sorted(D.items(), key=lambda item: item[1]))
+
         # implement prims
-        while len(S) < self.n-1:
-            print(S)
+        """recall when we made the graph it was generated from 2 -> n, therefore our count of vertices in the graph
+        will be n-1 since it start at 2. In my case n= 10, so 9 vertices therefore total amount of edges must be 8
+        hence the len(S) < self.n-2, not len(S) < self.n"""
+        while len(S) < self.n-2:
             for e in D:
                 if e[0] in T and e[1] in Q:
                     S.append(D[e])
                     T.append(e[1])
                     Q.remove(e[1])
                     break
-                elif e[1] in T and e[0] in Q:
-                    S.append(D[e])
-                    T.append(e[0])
-                    Q.remove(e[0])
-                    break
         print("Final edge values are", S)
+
+    def BFS(self):
+        #
 
     def print_graph(self):
         print("Adjacency Matrix:")
@@ -117,8 +116,9 @@ class Graph:
 # Create a new graph
 g = Graph()
 g.randomgeneration()
-# g.print_graph()
-g.Prims()
+g.print_graph()
+# g.Prims()
+
 """
 # Add some vertices to the graph
 g.add_vertex(Vertex('A'))
