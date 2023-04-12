@@ -20,7 +20,7 @@ class Graph:
     vertices = {}
     edges = []
     edge_indices = {}
-    n = 20
+    n = 5
 
     """ chose to use matrix because after I read the instructions I thought it was going to be a dense graph, but it is sparse"""
 
@@ -100,8 +100,9 @@ class Graph:
                     T.append(e[1])
                     Q.remove(e[1])
                     break
-        print("Final edge values are: ", S)
-        print(sum(S))
+        # print("Final edge values are: ", S)
+        print("Primsum", sum(S))
+        return (sum(S))
 
     def BFS(self):
         q = queue.Queue()
@@ -109,6 +110,7 @@ class Graph:
         # starting at vertex object 2
         q.put(self.vertices[1])
         self.vertices[1].added_queue = True
+        print("BFS starting at vertice", self.vertices[1].vertexval)
         finalweight = []
         while q.empty() == False:
             neighbours = []
@@ -126,8 +128,9 @@ class Graph:
                     neighbour.added_queue = True
                     finalweight.append(
                         self.edges[x.vertexval-1][neighbour.vertexval - 1])
-        print("Final edge values are", finalweight)
-        print(sum(finalweight))
+        # print("Final edge values are", finalweight)
+        print("BFSSUM", sum(finalweight))
+        return (sum(finalweight))
 
     def print_graph(self):
         print("Adjacency Matrix:")
@@ -138,11 +141,38 @@ class Graph:
 #        print("\nVertices:")
  #       for vertex, index in self.edge_indices.items():
   #          print(vertex)
+
+    def average(self):
+        k = input("input k paramter: ")
+        k = int(k)
+        self.n = 0
+        for i in range(3):
+            self.n += 20
+            B = 0
+            P = 0
+
+            for j in range(k):
+                self.randomgeneration()
+                # make all added_queue to false so BFS works
+                for vertex in self.vertices.values():
+                    vertex.added_queue = False
+
+                B += self.BFS()
+                P += self.Prims()
+                print(B)
+                print(P)
+            avg = (B - P)/10
+            print('avergae for n = ', self.n, 'is',
+                  avg, "after ", k, "iterations")
+
+
 g = Graph()
 g.randomgeneration()
 g.print_graph()
 g.Prims()
 g.BFS()
+g.average()
+
 """--------part 2-------------------"""
 
 
