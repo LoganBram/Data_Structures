@@ -1,4 +1,5 @@
 import random
+import queue
 
 """Using matrix due to dense graph & edges needing to be weighted. 
 
@@ -19,7 +20,7 @@ class Graph:
     vertices = {}
     edges = []
     edge_indices = {}
-    n = 10
+    n = 4
 
     """ chose to use matrix because after I read the instructions I thought it was going to be a dense graph, but it is sparse"""
 
@@ -102,24 +103,42 @@ class Graph:
         print("Final edge values are", S)
 
     def BFS(self):
-
-        pass
+        q = queue.Queue()
+        q.put(self.vertices[2])
+        self.vertices[2].added_queue = True
+        finalweight = []
+        while q.empty() == False:
+            neighbours = []
+            x = q.get()
+            for i in range(self.n - 1):
+                if self.edges[i][x.vertexval - 1] != 0:
+                    neighbours.append(self.vertices[i+1])
+                for neighbour in neighbours:
+                    if neighbour.added_queue == False:
+                        q.put(neighbour)
+                        neighbour.added_queue = True
+                        print(type(neighbour.vertexval))
+                        finalweight.append(
+                            self.edges[x.vertexval-1][neighbour.vertexval - 1])
+        print("Final edge values are", finalweight)
 
     def print_graph(self):
         print("Adjacency Matrix:")
         for row in self.edges:
             print(row)
 
+
 #        print("\nVertices:")
  #       for vertex, index in self.edge_indices.items():
   #          print(vertex)
-
 
 # Create a new graph
 g = Graph()
 g.randomgeneration()
 g.print_graph()
-g.Prims()
+# g.Prims()
+g.BFS()
+
 
 """
 # Add some vertices to the graph
