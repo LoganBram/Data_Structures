@@ -73,27 +73,28 @@ class Graph:
         # add each vertex to Q
         for vertex, index in self.edge_indices.items():
             Q.append(vertex)
-        # getting all edges paired with vertex coordinates & getting rid of repitions ex) 0,2 and 2,0
+        # getting all edges paired with vertex coordinates & getting rid of repetitions ex) 0,2 and 2,0
         for i in range(self.n-1):
             for j in range(self.n-1):
                 weight = self.edges[i][j]
                 # +1 because it should represent the vertice value not the index of the vertice
-                D[(i+1, j+1)] = weight
+                if weight != 0:  # check if the weight is non-zero
+                    D[(i+1, j+1)] = weight
 
-        # pick random first vertice from Q for T
+        # pick random first vertex from Q for T
         x = random.randint(0, len(Q)-1)
         T.append(Q[x])
         Q.remove(Q[x])
-        # sort D by value lowet to highest
+        # sort D by value lowest to highest
         D = dict(sorted(D.items(), key=lambda item: item[1]))
 
-        # implement prims
+        # implement prim's algorithm
         """recall when we made the graph it was generated from 2 -> n, therefore our count of vertices in the graph
         will be n-1 since it start at 2. In my case n= 10, so 9 vertices therefore total amount of edges must be 8
         hence the len(S) < self.n-2, not len(S) < self.n"""
         while len(S) < self.n-2:
             for e in D:
-                if e[0] in T and e[1] in Q:
+                if e[0] in T and e[1] in Q and D[e] != 0:  # check if the edge weight is non-zero
                     S.append(D[e])
                     T.append(e[1])
                     Q.remove(e[1])
@@ -101,23 +102,24 @@ class Graph:
         print("Final edge values are", S)
 
     def BFS(self):
-        #
+
+        pass
 
     def print_graph(self):
         print("Adjacency Matrix:")
         for row in self.edges:
             print(row)
 
-        print("\nVertices:")
-        for vertex, index in self.edge_indices.items():
-            print(vertex)
+#        print("\nVertices:")
+ #       for vertex, index in self.edge_indices.items():
+  #          print(vertex)
 
 
 # Create a new graph
 g = Graph()
 g.randomgeneration()
 g.print_graph()
-# g.Prims()
+g.Prims()
 
 """
 # Add some vertices to the graph
