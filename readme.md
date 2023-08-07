@@ -7,4 +7,4 @@
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A23.jpg" alt="Alt Text" width="450" height="600">
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A31.jpg" alt="Alt Text" width="450" height="600">
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A32.jpg" alt="Alt Text" width="450" height="600">
-<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A33.jpg" alt="Alt Text" width="450" height="600">
+<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A33.jpg" >
