@@ -3,7 +3,7 @@
 ## Assignment 3
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A31.jpg" alt="Alt Text" width="450" height="600">
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A32.jpg" alt="Alt Text" width="450" height="600">
-<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A33.jpg" width="450" height="600">
+<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A33.jpg" width="450" height="225">
 
 ## Assignment 2
 <img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A21.jpg" alt="Alt Text" width="450" height="600">
