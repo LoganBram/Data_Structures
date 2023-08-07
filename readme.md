@@ -1,4 +1,4 @@
-<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A1(1).jpg" alt="Alt Text" width="300" height="410">
+<img src="https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A1(1).jpg" alt="Alt Text" width="350" height="460">
 
 
 ![img|32x27](https://github.com/LoganBram/Data_Structures/blob/main/assignmentphotos/A1(1).jpg)
