@@ -1,3 +1,5 @@
+### 90%+ achieved on all assignments
+
 # Assignment Instructions
 
 ## Assignment 3
